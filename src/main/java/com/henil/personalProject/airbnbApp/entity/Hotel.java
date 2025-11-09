@@ -25,10 +25,12 @@ public class Hotel {
     private String city;
 
     @Column(columnDefinition = "JSON")
-    private String photos;
+    @Convert(converter = com.henil.personalProject.airbnbApp.utils.StringListConverter.class)
+    private List<String> photos;
 
     @Column(columnDefinition = "JSON")
-    private String amenities;
+    @Convert(converter = com.henil.personalProject.airbnbApp.utils.StringListConverter.class)
+    private List<String> amenities;
 
     @CreationTimestamp
     @Column(updatable = false)
@@ -45,4 +47,7 @@ public class Hotel {
 
     @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
     private List<Room> rooms;
+
+    @ManyToOne
+    private User owner;
 }
