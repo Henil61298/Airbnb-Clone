@@ -3,6 +3,7 @@ package com.henil.personalProject.airbnbApp.controller;
 import com.henil.personalProject.airbnbApp.Advice.ApiResponse;
 import com.henil.personalProject.airbnbApp.dto.RoomDto;
 import com.henil.personalProject.airbnbApp.service.RoomService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,7 @@ public class RoomController {
     }
 
     @DeleteMapping("/{roomId}")
-    public ApiResponse<String> deleteRoomById(Long roomId){
+    public ApiResponse<String> deleteRoomById(@PathVariable Long roomId){
         return roomService.deleteRoomById(roomId);
     }
 }

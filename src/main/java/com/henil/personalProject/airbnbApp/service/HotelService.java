@@ -4,11 +4,15 @@ import com.henil.personalProject.airbnbApp.Advice.ApiResponse;
 import com.henil.personalProject.airbnbApp.Exceptions.ResourceNotFoundException;
 import com.henil.personalProject.airbnbApp.dto.HotelDto;
 import com.henil.personalProject.airbnbApp.entity.Hotel;
+import com.henil.personalProject.airbnbApp.entity.Room;
 import com.henil.personalProject.airbnbApp.repository.HotelRepository;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Slf4j
@@ -18,6 +22,9 @@ public class HotelService {
 
     @Autowired
     private ModelMapper mapper;
+
+    @Autowired
+    private InventoryService inventoryService;
 
     public HotelDto createNewHotel(HotelDto hotelDto){
         log.info("Creating hotel with name: " + hotelDto.getName());
@@ -49,6 +56,7 @@ public class HotelService {
         return hotelDto;
     }
 
+    @Transactional
     public ApiResponse<String> deleteHotelById(Long id){
         log.info("Deleting hotel with id: {}", id);
         Hotel hotel = hotelExistById(id);
@@ -57,12 +65,17 @@ public class HotelService {
         return new ApiResponse<>("Deleted");
     }
 
+    @Transactional
     public ApiResponse<String> activateHotelById(Long id){
         log.info("Activating hotel with id: {}", id);
         Hotel hotel = hotelExistById(id);
         hotel.setActive(true);
         hotelRepository.save(hotel);
         log.info("hotel with id: {} is activated successfully", id);
+        List<Room> roomList = hotel.getRooms();
+        for (Room room : roomList){
+            inventoryService.initializeInventory(room);
+        }
         return new ApiResponse<>("success");
     }
 }

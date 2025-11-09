@@ -1,7 +1,14 @@
 package com.henil.personalProject.airbnbApp.repository;
 
+import com.henil.personalProject.airbnbApp.entity.Hotel;
 import com.henil.personalProject.airbnbApp.entity.Inventory;
+import com.henil.personalProject.airbnbApp.entity.Room;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.time.LocalDate;
 
 public interface InventoryRepository extends JpaRepository<Inventory, Long> {
+    @Query("select i from Inventory i where i.room = ?1 and i.hotel = ?2 and i.date = ?3")
+    Inventory findInventoryByRoomAndHotelAndDate(Room room, Hotel hotel, LocalDate today);
 }

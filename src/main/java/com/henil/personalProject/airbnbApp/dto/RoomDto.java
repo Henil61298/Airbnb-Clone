@@ -11,14 +11,14 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class RoomDto {
-    private Long id;
     private String type;
     private BigDecimal price;
-    private String photos;
-    private String amenities;
+    private List<String> photos;
+    private List<String> amenities;
     private Integer totalCount;
     private Integer capacity;
 }

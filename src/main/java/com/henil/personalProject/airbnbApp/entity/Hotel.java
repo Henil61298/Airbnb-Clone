@@ -45,7 +45,7 @@ public class Hotel {
     @Column(nullable = false)
     private Boolean active;
 
-    @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Room> rooms;
 
     @ManyToOne

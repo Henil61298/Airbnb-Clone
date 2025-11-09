@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,16 +29,21 @@ public class Room {
     private BigDecimal price;
 
     @Column(columnDefinition = "JSON")
-    private String photos;
+    @Convert(converter = com.henil.personalProject.airbnbApp.utils.StringListConverter.class)
+    private List<String> photos;
 
     @Column(columnDefinition = "JSON")
-    private String amenities;
+    @Convert(converter = com.henil.personalProject.airbnbApp.utils.StringListConverter.class)
+    private List<String> amenities;
 
     @Column(nullable = false)
     private Integer totalCount;
 
     @Column(nullable = false)
     private Integer capacity;
+
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Inventory> inventoryList;
 
     @CreationTimestamp
     @Column(updatable = false)
