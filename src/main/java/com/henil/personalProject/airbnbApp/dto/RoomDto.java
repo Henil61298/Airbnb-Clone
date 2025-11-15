@@ -15,6 +15,7 @@ import java.util.List;
 
 @Data
 public class RoomDto {
+    private Long id;
     private String type;
     private BigDecimal price;
     private List<String> photos;

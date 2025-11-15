@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -23,9 +24,10 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
     private String name;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 }

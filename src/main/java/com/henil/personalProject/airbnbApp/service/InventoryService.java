@@ -8,6 +8,7 @@ import com.henil.personalProject.airbnbApp.entity.Hotel;
 import com.henil.personalProject.airbnbApp.entity.Inventory;
 import com.henil.personalProject.airbnbApp.entity.Room;
 import com.henil.personalProject.airbnbApp.repository.InventoryRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,6 +22,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
+@Slf4j
 public class InventoryService {
     @Autowired
     private InventoryRepository inventoryRepository;
@@ -74,6 +76,7 @@ public class InventoryService {
     }
 
     public HotelInfoDto getHotelInfoById(Hotel hotel) {
+        log.info("Fetching hotel info for hotel with id: {}", hotel.getId());
         HotelDto hotelDto = mapper.map(hotel, HotelDto.class);
 
         List<Room> roomList = hotel.getRooms();
